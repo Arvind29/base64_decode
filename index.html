@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Base64 Decoder | Instant Online Tool</title>
+    <style>
+        :root {
+            --primary: #4361ee;
+            --dark: #212529;
+            --light: #f8f9fa;
+            --success: #4cc9f0;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7ff;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        h1 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            color: #6c757d;
+            font-weight: normal;
+        }
+        
+        .tool-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .input-group {
+            margin-bottom: 1rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 0.75rem;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            resize: vertical;
+            font-family: monospace;
+            font-size: 14px;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        button:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+        
+        button.secondary {
+            background-color: #6c757d;
+        }
+        
+        button.success {
+            background-color: var(--success);
+        }
+        
+        .output-container {
+            position: relative;
+        }
+        
+        .copy-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: rgba(0, 0, 0, 0.1);
+            border: none;
+            border-radius: 3px;
+            padding: 0.25rem 0.5rem;
+            font-size: 12px;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 1rem;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        
+        .feature-card h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Base64 Decoder</h1>
+            <p class="subtitle">Instantly decode Base64 strings to readable text</p>
+        </header>
+        
+        <div class="tool-container">
+            <div class="input-group">
+                <label for="base64-input">Enter your Base64 string:</label>
+                <textarea id="base64-input" placeholder="Paste your Base64 here (e.g., TWFuIGlzLi4u)"></textarea>
+            </div>
+            
+            <div class="button-group">
+                <button id="decode-btn">Decode</button>
+                <button id="clear-btn" class="secondary">Clear</button>
+                <button id="sample-btn" class="secondary">Load Sample</button>
+            </div>
+            
+            <div class="input-group">
+                <label for="output">Decoded result:</label>
+                <div class="output-container">
+                    <textarea id="output" readonly placeholder="Your decoded text will appear here"></textarea>
+                    <button id="copy-btn" class="copy-btn">Copy</button>
+                </div>
+            </div>
+            
+            <div class="button-group">
+                <button id="encode-btn" class="success">Switch to Encode</button>
+            </div>
+        </div>
+        
+        <div class="features">
+            <div class="feature-card">
+                <h3>What is Base64?</h3>
+                <p>Base64 is a method to encode binary data into ASCII characters. It's commonly used for data URLs, email attachments, and basic obfuscation.</p>
+            </div>
+            
+            <div class="feature-card">
+                <h3>How to use</h3>
+                <ol>
+                    <li>Paste your Base64 string</li>
+                    <li>Click "Decode"</li>
+                    <li>Copy or edit the result</li>
+                </ol>
+            </div>
+            
+            <div class="feature-card">
+                <h3>Example</h3>
+                <p>Try this sample: <code>TWFuIGlzIGRpc3Rpbmd1aXNoZWQ=</code> (decodes to "Man is distinguished")</p>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Free online Base64 decoder tool | No data is sent to servers - processing happens in your browser</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const base64Input = document.getElementById('base64-input');
+            const output = document.getElementById('output');
+            const decodeBtn = document.getElementById('decode-btn');
+            const clearBtn = document.getElementById('clear-btn');
+            const copyBtn = document.getElementById('copy-btn');
+            const sampleBtn = document.getElementById('sample-btn');
+            const encodeBtn = document.getElementById('encode-btn');
+            
+            // Real-time decoding
+            base64Input.addEventListener('input', function() {
+                try {
+                    output.value = atob(base64Input.value.trim());
+                } catch (e) {
+                    if (base64Input.value.length > 0) {
+                        output.value = "Invalid Base64 input";
+                    } else {
+                        output.value = "";
+                    }
+                }
+            });
+            
+            // Decode button
+            decodeBtn.addEventListener('click', function() {
+                try {
+                    output.value = atob(base64Input.value.trim());
+                } catch (e) {
+                    output.value = "Invalid Base64 input";
+                }
+            });
+            
+            // Clear button
+            clearBtn.addEventListener('click', function() {
+                base64Input.value = "";
+                output.value = "";
+            });
+            
+            // Copy button
+            copyBtn.addEventListener('click', function() {
+                output.select();
+                document.execCommand('copy');
+                copyBtn.textContent = "Copied!";
+                setTimeout(() => {
+                    copyBtn.textContent = "Copy";
+                }, 2000);
+            });
+            
+            // Sample button
+            sampleBtn.addEventListener('click', function() {
+                base64Input.value = "VGhpcyBpcyBhIHNhbXBsZSBCYXNlNjQgZW5jb2RlZCBzdHJpbmc=";
+                output.value = atob(base64Input.value);
+            });
+            
+            // Switch to encode
+            encodeBtn.addEventListener('click', function() {
+                window.location.href = "encode.html"; // You'd create this page
+            });
+        });
+    </script>
+</body>
+</html>
